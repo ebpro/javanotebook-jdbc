@@ -1,5 +1,8 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+. ${DIR}/env.sh
+
 docker run \
-	--name jupyterjava \
+	--name ${PWD##*/} \
         --rm \
 	--volume $PWD/notebooks:/notebooks \
         --volume $PWD/src:/src \
@@ -10,4 +13,4 @@ docker run \
       	--env PGID=$GID \
        	--env SUDO_PASSWORD=secret \
         --volume ~/.m2:/home/user/.m2 \
-        brunoe/jupyterjava:develop
+        $BASE:$BRANCH
