@@ -4,4 +4,4 @@ docker run --rm \
         --publish 8888:8888 \
         --env NB_UID=$UID \
         --env JUPYTER_ENABLE_LAB=yes \
-        brunoe/jupyterjava:feature_update2021
+        brunoe/jupyterjava:develop
