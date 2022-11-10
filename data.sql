@@ -37,7 +37,7 @@ create table gtfs_agency (
   -- unofficial features
   agency_phone text
 --, fare_url text
-) AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/agency.txt');
+) AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/agency.txt');
 
 --unoffical table, related to gtfs_stops(location_type)
 create table gtfs_location_types (
@@ -60,7 +60,7 @@ create table gtfs_stops (
   stop_lat   double precision,
   stop_lon   double precision,
   location_type int --FOREIGN KEY REFERENCES gtfs_location_types(location_type)
-) AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/stops.txt');
+) AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/stops.txt');
 
 -- select AddGeometryColumn( 'gtfs_stops', 'location', #{WGS84_LATLONG_EPSG}, 'POINT', 2 );
 -- CREATE INDEX gtfs_stops_location_ix ON gtfs_stops USING GIST ( location GIST_GEOMETRY_OPS );
@@ -88,7 +88,7 @@ create table gtfs_routes (
   route_type  int , --REFERENCES gtfs_route_types(route_type),
   FOREIGN KEY (agency_id) REFERENCES gtfs_agency(agency_id),
   FOREIGN KEY (route_type) REFERENCES gtfs_route_types(route_type)
-)  AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/routes.txt');
+)  AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/routes.txt');
 
 create table gtfs_directions (
   direction_id int PRIMARY KEY,
@@ -124,7 +124,7 @@ create table gtfs_calendar (
   sunday int NOT NULL, --NOT NULL,
   start_date   date NOT NULL, --NOT NULL,
   end_date     date NOT NULL --NOT NULL
-) AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/calendar.txt');
+) AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/calendar.txt');
 
 create table gtfs_calendar_dates (
   service_id     varchar , --REFERENCES gtfs_calendar(service_id),
@@ -200,7 +200,7 @@ create table gtfs_trips (
   bikes_allowed int ,
   FOREIGN KEY (route_id) REFERENCES gtfs_routes(route_id),
   FOREIGN KEY (direction_id) REFERENCES gtfs_directions(direction_id)
-) AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/trips.txt');
+) AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/trips.txt');
 
 create table gtfs_stop_times (
     trip_id int , --REFERENCES gtfs_trips(trip_id),
@@ -217,7 +217,7 @@ create table gtfs_stop_times (
   FOREIGN KEY (drop_off_type) REFERENCES gtfs_pickup_dropoff_types(type_id),
   CHECK (arrival_time LIKE '__:__:__'),
   CHECK (departure_time LIKE '__:__:__')
-) AS SELECT * FROM CSVREAD('/home/jovyan/javanotebook-jdbc/resources/stop_times.txt');
+) AS SELECT * FROM CSVREAD('/home/jovyan/work/javanotebook-jdbc/resources/stop_times.txt');
 
 -- create index arr_time_index on gtfs_stop_times(arrival_time_seconds);
 -- create index dep_time_index on gtfs_stop_times(departure_time_seconds);
